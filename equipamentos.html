@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Equipamentos | Fugindo da Casinha</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           VARIÁVEIS (Identidade Visual)
+           ========================================= */
+        :root {
+            --color-primary: #2E7D32;
+            --color-accent: #FF6D00;
+            --color-text: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.10);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-blur: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--color-text);
+            min-height: 100vh;
+            /* Fundo diferente ou o mesmo do index */
+            background: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            position: relative;
+            padding: 2rem 1rem;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.75); /* Fundo escuro para destacar os produtos */
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px; /* Mais largo para caber 3 colunas */
+            margin: 0 auto;
+        }
+
+        /* --- CABEÇALHO --- */
+        header { 
+            text-align: center;
+            margin-bottom: 3rem; 
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Botão Voltar */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .btn-back:hover { opacity: 1; transform: translateX(-5px); }
+
+        /* --- SEÇÕES DE CATEGORIA --- */
+        .category-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            color: var(--color-accent);
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-title i { margin-right: 10px; }
+
+        /* --- GRID DE PRODUTOS --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsivo Automático */
+            gap: 1.5rem;
+        }
+
+        /* --- CARD DO PRODUTO --- */
+        .product-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* Imagem do Produto */
+        .img-container {
+            width: 100%;
+            height: 200px;
+            background: white; /* Fundo branco para produto recortado */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .product-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Selo "Nós Usamos" */
+        .badge-approved {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--color-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Conteúdo do Card */
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1; /* Empurra o botão para o final */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Botão Comprar */
+        .btn-buy {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--color-accent); /* Laranja Decathlon */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-buy:hover {
+            background: #e65100;
+        }
+        
+        .btn-buy i { margin-right: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Voltar para Bio
+        </a>
+
+        <header>
+            <h1>O Que Levamos na Mochila? 🎒</h1>
+            <p class="subtitle">
+                Separamos aqui apenas os equipamentos que nós usamos, testamos e confiamos nas nossas viagens. Links seguros da Decathlon.
+            </p>
+        </header>
+
+        <div class="category-title">
+            <i class="fa-solid fa-bed"></i> Quarto & Barraca
+        </div>
+
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="img-container">
+                    <span class="badge-approved"><i class="fa-solid fa-check"></i> Aprovado</span>
+                    <img src="https://contents.mediadecathlon.com/p1764639/k$9e53b2111004123c5240217277764831/barraca-de-camping-arpenaz-41-4-pessoas-1-quarto-quechua.jpg?format=auto&quality=40&f=800x0" alt="Barraca Quechua" class="product-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="product-name">Barraca Quechua Arpenaz 4.1</h3>
+                    <p class="product-desc">A nossa casa principal. Tem sala para ficar em pé e quarto escuro (Fresh & Black). Aguenta chuva forte!</p>
+                    <a href="SEU_LINK_AFILIADO_AQUI" target="_blank" class="btn-buy">
+                        <i class="fa-solid fa-cart-shopping"></i> Ver Preço
+                    </a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <span class="badge-approved"><i class="fa-solid fa-check"></i> Conforto</span>
+                    <img src="https://contents.mediadecathlon.com/p1749721/k$e8e4531a78913386663523730043815e/colchao-inflavel-de-camping-air-basic-casal-120-cm-quechua.jpg?format=auto&quality=40&f=800x0" alt="Colchão Inflável" class="product-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="product-name">Colchão Quechua Air Basic</h3>
+                    <p class="product-desc">Essencial para não dormir no chão duro. Usamos o modelo de casal (120cm).</p>
+                    <a href="SEU_LINK_AFILIADO_AQUI" target="_blank" class="btn-buy">
+                        <i class="fa-solid fa-cart-shopping"></i> Ver Preço
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="category-title">
+            <i class="fa-solid fa-fire-burner"></i> Cozinha de Camping
+        </div>
+
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="img-container">
+                    <span class="badge-approved"><i class="fa-solid fa-check"></i> Indispensável</span>
+                    <img src="https://contents.mediadecathlon.com/p2169542/k$61765c7170884841a1205c0406859664/fogareiro-a-gas-de-camping-1-boca-bistro-3-campingaz.jpg?format=auto&quality=40&f=800x0" alt="Fogareiro" class="product-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="product-name">Fogareiro Bistro Campingaz</h3>
+                    <p class="product-desc">Prático e seguro. A maleta facilita muito o transporte. Ferve água rapidinho.</p>
+                    <a href="SEU_LINK_AFILIADO_AQUI" target="_blank" class="btn-buy">
+                        <i class="fa-solid fa-cart-shopping"></i> Ver Preço
+                    </a>
+                </div>
+            </div>
+            
+             <div class="product-card">
+                <div class="img-container">
+                    <span class="badge-approved"><i class="fa-solid fa-check"></i> Top</span>
+                    <img src="https://contents.mediadecathlon.com/p1988965/k$d59f796d11e59265f2425a1e2f69466c/conjunto-de-panelas-inox-antiaderente-mh500-2-pessoas-1-6-litros-quechua.jpg?format=auto&quality=40&f=800x0" alt="Kit Panelas" class="product-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="product-name">Kit Panelas MH500 (2 Pessoas)</h3>
+                    <p class="product-desc">Compacto, encaixa tudo um dentro do outro. Antiaderente de verdade.</p>
+                    <a href="SEU_LINK_AFILIADO_AQUI" target="_blank" class="btn-buy">
+                        <i class="fa-solid fa-cart-shopping"></i> Ver Preço
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

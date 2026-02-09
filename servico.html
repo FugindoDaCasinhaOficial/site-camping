@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços Web | Fugindo da Casinha</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           REUTILIZANDO VARIÁVEIS DO INDEX
+           Mantém a consistência visual (Branding)
+           ========================================= */
+        :root {
+            --color-primary: #2E7D32;
+            --color-accent: #FF6D00;
+            --color-text: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.10);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-blur: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--color-text);
+            min-height: 100vh;
+            background: url('https://images.unsplash.com/photo-1497906539264-eb74442e37a9?q=80&w=1976&auto=format&fit=crop') no-repeat center center/cover;
+            /* Fundo levemente diferente (mais "business/tech") ou mantenha o mesmo */
+            position: relative;
+            padding: 2rem 1rem;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7); /* Mais escuro para ler textos longos */
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px; /* Mais largo para caber os cards */
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* --- CABEÇALHO --- */
+        header { margin-bottom: 2.5rem; }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- BOTÃO VOLTAR --- */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .btn-back:hover { opacity: 1; transform: translateX(-5px); }
+
+        /* --- GRID DE PACOTES --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: um em cima do outro */
+            gap: 2rem;
+        }
+
+        /* Tablet/Desktop: Lado a lado */
+        @media (min-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* --- CARDS DE PREÇO (Componente Novo) --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Destaque para o plano PRO */
+        .card.featured {
+            border: 2px solid var(--color-accent);
+            background: rgba(46, 125, 50, 0.2); /* Tom verde sutil */
+        }
+
+        .tag-popular {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--color-accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .price span { font-size: 1rem; font-weight: 400; opacity: 0.7; }
+
+        /* Lista de Benefícios */
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .features li i {
+            color: #4CAF50; /* Check verde */
+            margin-right: 10px;
+            min-width: 20px;
+        }
+
+        /* Botão de Contratar (WhatsApp) */
+        .btn-contract {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: white;
+            color: #000;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        .card.featured .btn-contract {
+            background: var(--color-accent); /* Laranja no destaque */
+            color: white;
+        }
+
+        .btn-contract:hover { transform: scale(1.05); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Voltar ao Perfil
+        </a>
+
+        <header>
+            <h1>Eleve seu Nível Digital 🚀</h1>
+            <p class="subtitle">
+                Não é apenas um site. É uma estratégia para organizar seu conteúdo, passar autoridade e vender mais. Desenvolvido por quem entende de código e de conteúdo.
+            </p>
+        </header>
+
+        <div class="pricing-grid">
+            
+            <div class="card">
+                <h2>Bio Start</h2>
+                <p style="opacity: 0.8; margin-bottom: 1rem;">Para quem está começando e quer profissionalismo.</p>
+                
+                <div class="price">R$ 199,00<span>/único</span></div>
+                
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> Página "Link na Bio" Personalizada</li>
+                    <li><i class="fa-solid fa-check"></i> Design Moderno (Glassmorphism)</li>
+                    <li><i class="fa-solid fa-check"></i> Ícones e botões animados</li>
+                    <li><i class="fa-solid fa-check"></i> Hospedagem Gratuita (GitHub)</li>
+                    <li><i class="fa-solid fa-check"></i> Entrega em até 48h</li>
+                </ul>
+
+                <a href="https://wa.me/55DDSEUNUMERO?text=Olá!%20Vi%20seu%20site%20e%20quero%20o%20plano%20BIO%20START." target="_blank" class="btn-contract">
+                    Contratar Start
+                </a>
+            </div>
+
+            <div class="card featured">
+                <div class="tag-popular">Mais Vendido</div>
+                <h2>Growth Partner</h2>
+                <p style="opacity: 0.8; margin-bottom: 1rem;">A estrutura completa para influenciadores e lojas.</p>
+                
+                <div class="price">R$ 499,00<span> + R$ 50/mês</span></div>
+                
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> <strong>Tudo do plano Start</strong></li>
+                    <li><i class="fa-solid fa-check"></i> Página de Vendas (Landing Page)</li>
+                    <li><i class="fa-solid fa-check"></i> Configuração de SEO (Google)</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Manutenção Mensal de Conteúdo</strong></li>
+                    <li><i class="fa-solid fa-check"></i> Integração com WhatsApp Business</li>
+                    <li><i class="fa-solid fa-check"></i> Relatório Básico de Cliques</li>
+                </ul>
+
+                <a href="https://wa.me/55DDSEUNUMERO?text=Olá!%20Quero%20elevar%20meu%20nível%20com%20o%20plano%20GROWTH%20PARTNER." target="_blank" class="btn-contract">
+                    Contratar Growth
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
