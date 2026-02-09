@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Senior Dev Note: System Design Tokens */
         :root {
             --primary: #2E7D32;
             --accent: #FF6D00;
@@ -25,47 +24,54 @@
         body {
             font-family: 'Open Sans', sans-serif;
             color: var(--text-main);
-            background-color: #000;
+            background-color: #000; /* Fundo de segurança */
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* --- VIDEO BACKGROUND ENGINE (LOCAL FILE) --- */
-        .video-background {
+        /* --- CORREÇÃO DO VIDEO BACKGROUND --- */
+        .video-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            background: #000; /* Previne flash branco no load */
+            z-index: -10; /* Bem atrás de tudo */
+            overflow: hidden;
+            background: #000;
         }
 
-        .video-background video {
-            width: 100%;
-            height: 100%;
+        .video-container video {
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             object-fit: cover;
-            /* Senior Tip: O filtro de brilho ajuda na leitura dos textos sobre o fogo */
-            filter: brightness(0.5) contrast(1.1);
+            filter: brightness(0.4) contrast(1.2); /* Escurece para dar leitura */
         }
 
+        /* Overlay para garantir que o texto não "suma" no fogo */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Gradiente radial para criar vinheta e destacar os cards centrais */
-            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
-            z-index: -1;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: -5;
         }
 
-        /* --- LAYOUT --- */
+        /* --- LAYOUT E CONTEÚDO --- */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
             position: relative;
+            z-index: 10; /* Garante que o conteúdo fique na frente */
         }
 
         .btn-back {
@@ -99,7 +105,6 @@
             gap: 2.5rem;
         }
 
-        /* --- CARDS --- */
         .card {
             background: var(--glass-surface);
             backdrop-filter: blur(15px);
@@ -151,18 +156,32 @@
         }
 
         .featured .btn-cta { background: var(--accent); color: #fff; }
+        .btn-cta:hover { filter: brightness(1.2); transform: scale(1.02); }
 
-        .btn-cta:hover { 
-            filter: brightness(1.2);
-            box-shadow: 0 5px 15px rgba(255,109,0,0.3);
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            width: fit-content;
+            margin-bottom: 10px;
         }
 
     </style>
 </head>
 <body>
 
+    <div class="video-container">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="fogueira.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="overlay"></div>
+
     <div class="container">
-        <nav class="nav-back">
+        <nav>
             <a href="index.html" class="btn-back">
                 <i class="fa-solid fa-chevron-left"></i> Voltar ao Perfil
             </a>
@@ -170,7 +189,7 @@
 
         <header>
             <h1>Eleve seu Nível Digital 🚀</h1>
-            <p class="subtitle">Transformamos sua presença online em uma máquina de autoridade. Escolha o plano ideal para sua fase atual.</p>
+            <p class="subtitle">Transformamos sua presença online em uma máquina de autoridade. Escolha o plano ideal.</p>
         </header>
 
         <main class="pricing-grid">
@@ -178,42 +197,31 @@
             <article class="card">
                 <h2 class="plan-name">Bio Start</h2>
                 <p class="plan-desc">Essencial para criadores que buscam profissionalismo imediato.</p>
-                
                 <div class="price-wrapper">
-                    <span class="currency">R$</span><span class="amount">347</span><span class="period">/único</span>
+                    <span class="currency">R$</span><span class="amount">347</span><span>/único</span>
                 </div>
-
                 <ul class="features-list">
                     <li><i class="fa-solid fa-circle-check"></i> Landing Page "Link na Bio"</li>
                     <li><i class="fa-solid fa-circle-check"></i> Design Glassmorphism Exclusivo</li>
                     <li><i class="fa-solid fa-circle-check"></i> Hospedagem Vitalícia (GitHub)</li>
                     <li><i class="fa-solid fa-circle-check"></i> Consultoria de Bio (Instagram)</li>
-                    <li><i class="fa-solid fa-circle-check"></i> SEO Básico para YouTube</li>
                 </ul>
-
                 <a href="https://wa.me/message/5H6YD4KXE3ZMB1?text=Quero%20o%20Plano%20Start" class="btn-cta">Começar Agora</a>
             </article>
 
             <article class="card featured">
                 <div class="badge">Mais Completo</div>
                 <h2 class="plan-name">Authority Pro</h2>
-                <p class="plan-desc">A estrutura robusta para quem deseja dominar o mercado digital.</p>
-                
+                <p class="plan-desc">A estrutura robusta para quem deseja dominar o mercado.</p>
                 <div class="price-wrapper">
-                    <span class="currency">R$</span><span class="amount">997</span><span class="period">+ R$199,40/mês</span>
+                    <span class="currency">R$</span><span class="amount">997</span><span>+ R$199/mês</span>
                 </div>
-
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-circle-check"></i> Landing Page "Link na Bio"</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Design Glassmorphism Exclusivo</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Consultoria de Bio (Instagram)</li>
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Site Completo + Domínio .com.br</strong></li>
+                    <li><i class="fa-solid fa-circle-check"></i> Site Completo + Domínio .com.br</li>
                     <li><i class="fa-solid fa-circle-check"></i> E-mail Profissional</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Suporte e Manutenção Mensal</li>
                     <li><i class="fa-solid fa-circle-check"></i> Consultoria de Linha Editorial</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Gestão de SEO e Analytics</li>
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Suporte e Manutenção Mensal</strong></li>
                 </ul>
-
                 <a href="https://wa.me/message/5H6YD4KXE3ZMB1?text=Quero%20o%20Plano%20Authority" class="btn-cta">Escalar minha Marca</a>
             </article>
 
