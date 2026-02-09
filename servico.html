@@ -3,240 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Soluções digitais premium para criadores de conteúdo.">
     <title>Serviços Web | Fugindo da Casinha</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* =========================================
-           REUTILIZANDO VARIÁVEIS DO INDEX
-           Mantém a consistência visual (Branding)
-           ========================================= */
+        /* Senior Dev Note: 
+           - Using CSS Variables for Design System tokens.
+           - Implementing a mobile-first approach.
+           - Glassmorphism UI Pattern.
+        */
         :root {
-            --color-primary: #2E7D32;
-            --color-accent: #FF6D00;
-            --color-text: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.10);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-blur: 12px;
+            --primary: #2E7D32;
+            --primary-light: #4caf50;
+            --accent: #FF6D00;
+            --text-main: #FFFFFF;
+            --text-muted: #CBD5E0;
+            --bg-overlay: rgba(0, 0, 0, 0.75);
+            --glass-surface: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
             font-family: 'Open Sans', sans-serif;
-            color: var(--color-text);
-            min-height: 100vh;
-            background: url('https://images.unsplash.com/photo-1497906539264-eb74442e37a9?q=80&w=1976&auto=format&fit=crop') no-repeat center center/cover;
-            /* Fundo levemente diferente (mais "business/tech") ou mantenha o mesmo */
+            color: var(--text-main);
+            line-height: 1.6;
+            background: #0f172a url('https://images.unsplash.com/photo-1497906539264-eb74442e37a9?q=80&w=1976&auto=format&fit=crop') no-repeat center center/cover fixed;
             position: relative;
-            padding: 2rem 1rem;
         }
 
         body::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.7); /* Mais escuro para ler textos longos */
+            background: var(--bg-overlay);
             z-index: -1;
         }
 
         .container {
-            max-width: 800px; /* Mais largo para caber os cards */
+            max-width: 1100px;
             margin: 0 auto;
-            text-align: center;
+            padding: 4rem 1.5rem;
         }
 
-        /* --- CABEÇALHO --- */
-        header { margin-bottom: 2.5rem; }
-        
+        /* Header Components */
+        .nav-back {
+            margin-bottom: 3rem;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .btn-back:hover { opacity: 1; transform: translateX(-5px); }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
         h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: clamp(2rem, 5vw, 3rem); /* Fluid typography */
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            font-size: 1.1rem;
-            color: #ddd;
-            max-width: 600px;
+            color: var(--text-muted);
+            max-width: 700px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
-        /* --- BOTÃO VOLTAR --- */
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            transition: 0.3s;
-        }
-        .btn-back:hover { opacity: 1; transform: translateX(-5px); }
-
-        /* --- GRID DE PACOTES --- */
+        /* Pricing Grid - Flex/Grid System */
         .pricing-grid {
             display: grid;
-            grid-template-columns: 1fr; /* Mobile: um em cima do outro */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
+            align-items: start;
         }
 
-        /* Tablet/Desktop: Lado a lado */
-        @media (min-width: 768px) {
-            .pricing-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* --- CARDS DE PREÇO (Componente Novo) --- */
+        /* Card Component */
         .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
+            background: var(--glass-surface);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: left;
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
             position: relative;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary-light);
         }
 
-        /* Destaque para o plano PRO */
         .card.featured {
-            border: 2px solid var(--color-accent);
-            background: rgba(46, 125, 50, 0.2); /* Tom verde sutil */
+            border: 2px solid var(--primary-light);
+            background: rgba(46, 125, 50, 0.1);
         }
 
-        .tag-popular {
+        /* Badge */
+        .badge {
             position: absolute;
-            top: -12px;
-            right: 20px;
-            background: var(--color-accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .card h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .price {
-            font-size: 2.5rem;
+            top: -15px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
             font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: #fff;
-        }
-        .price span { font-size: 1rem; font-weight: 400; opacity: 0.7; }
-
-        /* Lista de Benefícios */
-        .features {
-            list-style: none;
-            margin-bottom: 2rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 109, 0, 0.4);
         }
 
-        .features li {
-            margin-bottom: 0.8rem;
+        /* Price Tags */
+        .plan-name { font-family: 'Montserrat'; font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .plan-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; min-height: 50px; }
+        
+        .price-wrapper { margin-bottom: 2rem; }
+        .currency { font-size: 1rem; vertical-align: super; margin-right: 4px; }
+        .amount { font-size: 3.5rem; font-weight: 900; }
+        .period { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Feature List */
+        .features-list { list-style: none; margin-bottom: 3rem; flex-grow: 1; }
+        .features-list li {
             display: flex;
             align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
             font-size: 0.95rem;
         }
 
-        .features li i {
-            color: #4CAF50; /* Check verde */
-            margin-right: 10px;
-            min-width: 20px;
-        }
+        .features-list i { color: var(--primary-light); font-size: 1.1rem; }
 
-        /* Botão de Contratar (WhatsApp) */
-        .btn-contract {
+        /* CTA Button */
+        .btn-cta {
             display: block;
             width: 100%;
-            padding: 1rem;
-            text-align: center;
-            background: white;
-            color: #000;
-            font-weight: 800;
-            text-decoration: none;
+            padding: 1.2rem;
             border-radius: 50px;
-            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            background: #FFF;
+            color: #000;
         }
 
-        .card.featured .btn-contract {
-            background: var(--color-accent); /* Laranja no destaque */
-            color: white;
+        .featured .btn-cta {
+            background: var(--accent);
+            color: #FFF;
         }
 
-        .btn-contract:hover { transform: scale(1.05); }
+        .btn-cta:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: scale(1.02);
+        }
 
+        @media (max-width: 480px) {
+            .container { padding: 2rem 1rem; }
+            .card { padding: 2rem 1.5rem; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <a href="index.html" class="btn-back">
-            <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Voltar ao Perfil
-        </a>
+        <nav class="nav-back">
+            <a href="index.html" class="btn-back">
+                <i class="fa-solid fa-chevron-left"></i> Voltar ao Perfil
+            </a>
+        </nav>
 
         <header>
             <h1>Eleve seu Nível Digital 🚀</h1>
-            <p class="subtitle">
-                Não é apenas um site. É uma estratégia para organizar seu conteúdo, passar autoridade e vender mais. Desenvolvido por quem entende de código e de conteúdo.
-            </p>
+            <p class="subtitle">Transformamos sua presença online em uma máquina de autoridade. Escolha o plano ideal para sua fase atual.</p>
         </header>
 
-        <div class="pricing-grid">
+        <main class="pricing-grid">
             
-            <div class="card">
-                <h2>Bio Start</h2>
-                <p style="opacity: 0.8; margin-bottom: 1rem;">Para quem está começando e quer profissionalismo.</p>
+            <article class="card">
+                <h2 class="plan-name">Bio Start</h2>
+                <p class="plan-desc">Essencial para criadores que buscam profissionalismo imediato.</p>
                 
-                <div class="price">R$ 199,00<span>/único</span></div>
-                
-                <ul class="features">
-                    <li><i class="fa-solid fa-check"></i> Página "Link na Bio" Personalizada</li>
-                    <li><i class="fa-solid fa-check"></i> Design Moderno (Glassmorphism)</li>
-                    <li><i class="fa-solid fa-check"></i> Ícones e botões animados</li>
-                    <li><i class="fa-solid fa-check"></i> Hospedagem Gratuita (GitHub)</li>
-                    <li><i class="fa-solid fa-check"></i> Entrega em até 48h</li>
+                <div class="price-wrapper">
+                    <span class="currency">R$</span><span class="amount">347</span><span class="period">/único</span>
+                </div>
+
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-circle-check"></i> Landing Page "Link na Bio"</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Design Glassmorphism Exclusivo</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Hospedagem Vitalícia (GitHub)</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Consultoria de Bio (Instagram)</li>
+                    <li><i class="fa-solid fa-circle-check"></i> SEO Básico para YouTube</li>
                 </ul>
 
-                <a href="https://wa.me/55DDSEUNUMERO?text=Olá!%20Vi%20seu%20site%20e%20quero%20o%20plano%20BIO%20START." target="_blank" class="btn-contract">
-                    Contratar Start
-                </a>
-            </div>
+                <a href="https://wa.me/message/5H6YD4KXE3ZMB1?text=Quero%20o%20Plano%20Start" class="btn-cta">Começar Agora</a>
+            </article>
 
-            <div class="card featured">
-                <div class="tag-popular">Mais Vendido</div>
-                <h2>Growth Partner</h2>
-                <p style="opacity: 0.8; margin-bottom: 1rem;">A estrutura completa para influenciadores e lojas.</p>
+            <article class="card featured">
+                <div class="badge">Mais Completo</div>
+                <h2 class="plan-name">Authority Pro</h2>
+                <p class="plan-desc">A estrutura robusta para quem deseja dominar o mercado digital.</p>
                 
-                <div class="price">R$ 499,00<span> + R$ 50/mês</span></div>
-                
-                <ul class="features">
-                    <li><i class="fa-solid fa-check"></i> <strong>Tudo do plano Start</strong></li>
-                    <li><i class="fa-solid fa-check"></i> Página de Vendas (Landing Page)</li>
-                    <li><i class="fa-solid fa-check"></i> Configuração de SEO (Google)</li>
-                    <li><i class="fa-solid fa-check"></i> <strong>Manutenção Mensal de Conteúdo</strong></li>
-                    <li><i class="fa-solid fa-check"></i> Integração com WhatsApp Business</li>
-                    <li><i class="fa-solid fa-check"></i> Relatório Básico de Cliques</li>
+                <div class="price-wrapper">
+                    <span class="currency">R$</span><span class="amount">997</span><span class="period">+ R$199,40/mês</span>
+                </div>
+
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-circle-check"></i> Landing Page "Link na Bio"</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Design Glassmorphism Exclusivo</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Consultoria de Bio (Instagram)</li>
+                    <li><i class="fa-solid fa-circle-check"></i> <strong>Site Completo + Domínio .com.br</strong></li>
+                    <li><i class="fa-solid fa-circle-check"></i> E-mail Profissional</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Consultoria de Linha Editorial</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Gestão de SEO e Analytics</li>
+                    <li><i class="fa-solid fa-circle-check"></i> <strong>Suporte e Manutenção Mensal</strong></li>
                 </ul>
 
-                <a href="https://wa.me/55DDSEUNUMERO?text=Olá!%20Quero%20elevar%20meu%20nível%20com%20o%20plano%20GROWTH%20PARTNER." target="_blank" class="btn-contract">
-                    Contratar Growth
-                </a>
-            </div>
+                <a href="https://wa.me/message/5H6YD4KXE3ZMB1?text=Quero%20o%20Plano%20Authority" class="btn-cta">Escalar minha Marca</a>
+            </article>
 
-        </div>
+        </main>
     </div>
 
 </body>
