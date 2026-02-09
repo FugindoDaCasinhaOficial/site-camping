@@ -3,204 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fugindo da Casinha</title>
     
+    <title>Fugindo da Casinha | Links Oficiais</title>
+    
+    <meta property="og:title" content="Fugindo da Casinha | Links Oficiais">
+    <meta property="og:description" content="Camping, Aventuras e Dicas Outdoor. Confira nossos parceiros e equipamentos!">
+    <meta property="og:image" content="perfil.png">
+    <meta property="og:type" content="website">
+    
+    <link rel="icon" type="image/png" href="perfil.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #2E7D32; 
-            --accent-color: #FF6D00;
-            --text-color: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.1);
+            --color-primary: #2E7D32;
+            --color-accent: #FF6D00;
+            --color-premium: #FFD700;
+            --color-text: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.10);
             --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-blur: 12px;
+            --transition-speed: 0.3s;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Open Sans', sans-serif;
-            color: var(--text-color);
+            color: var(--color-text);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Fundo preto básico para evitar clarões caso a imagem demore a carregar */
-            background-color: #050a04; 
+            background-color: #050a04;
             position: relative;
-            /* Removemos o background-image daqui para usar nas camadas abaixo */
+            overflow-x: hidden;
         }
 
-        /* --- CAMADA 1: A NATUREZA DESFOCADA (Fundo) --- */
+        /* --- CAMADA 1: NATUREZA (DO CÓDIGO 2) --- */
         body::before {
             content: '';
             position: fixed;
-            /* Dica Pro: Usamos -5% e 110% para que o desfoque não crie uma "borda branca" na tela */
             top: -5%; left: -5%; width: 110%; height: 110%;
-            z-index: -3; /* Fica lá no fundo */
-            
-            background-image: url('natureza.jpg'); /* Sua nova imagem */
-            background-size: cover; /* Cobre tudo */
+            z-index: -3;
+            background-image: url('natureza.jpg'); 
+            background-size: cover;
             background-position: center;
-            
-            /* O Filtro Mágico: blur(15px) desfoca. brightness(0.6) deixa a natureza 
-               um pouco mais escura para não ofuscar o seu desenho. */
             filter: blur(15px) brightness(0.6); 
         }
 
-        /* --- CAMADA 2: O DESENHO (fundo.png) + SOMBREADO/VIGNETA --- */
+        /* --- CAMADA 2: FUNDO.PNG + VINHETA (DO CÓDIGO 2) --- */
         body::after {
             content: '';
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; /* Fica acima da natureza, mas atrás do texto */
-            
-            /* Aqui juntamos dois fundos na mesma camada:
-               1º O Gradiente escuro (Vigneta) por cima
-               2º A imagem fundo.png por baixo */
+            z-index: -2;
             background-image: 
                 radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%),
                 url('fundo.png');
-                
-            /* O gradiente usa 'cover', a imagem usa 'contain' (para não cortar) */
             background-size: cover, contain; 
             background-position: center, center;
             background-repeat: no-repeat, no-repeat;
         }
 
-        /* --- CAMADA 3: O CONTEÚDO (Frente) --- */
         .container {
             position: relative;
-            z-index: 1; /* Garante que os botões fiquem clicáveis por cima das imagens */
+            z-index: 1;
             width: 100%;
             max-width: 480px;
             padding: 2rem 1.5rem;
             text-align: center;
-            
-            /* Fundo de vidro escurecido no texto para garantir a leitura 
-               mesmo com a imagem detalhada atrás */
             background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
         }
 
         .profile-img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 3px solid var(--accent-color);
             object-fit: cover;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 3px solid var(--color-accent);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            animation: float 6s ease-in-out infinite;
         }
 
-        h1 {
+        .username {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px black;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        p.bio {
+        .bio {
             font-size: 0.95rem;
+            opacity: 0.9;
             margin-bottom: 2rem;
-            opacity: 1;
-            line-height: 1.5;
+            line-height: 1.6;
             text-shadow: 1px 1px 4px black;
-            font-weight: 600;
+        }
+
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .link-btn {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            padding: 1.1rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
             border: 1px solid var(--glass-border);
-            color: white;
-            padding: 1rem;
-            margin-bottom: 1rem;
             border-radius: 50px;
+            color: var(--color-text);
             text-decoration: none;
-            font-weight: 600;
             font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5); 
+            font-weight: 600;
+            font-size: 1rem;
+            overflow: hidden; 
+            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 0.6s forwards;
         }
 
         .link-btn i {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             position: absolute;
-            left: 20px;
+            left: 25px;
         }
 
         .link-btn:hover {
+            transform: scale(1.02) translateY(-2px);
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        .link-btn:hover::before { left: 100%; }
+
         .btn-destaque {
-            background: var(--primary-color);
+            background: var(--color-primary);
             border: none;
-            box-shadow: 0 0 15px rgba(46, 125, 50, 0.6);
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
         }
         .btn-destaque:hover { background: #1b5e20; }
 
+        .btn-premium {
+            background: linear-gradient(135deg, #2b2b2b, #444444);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: var(--color-premium);
+            font-weight: 800;
+            animation: slideInUp 0.6s forwards, pulse-gold 2s infinite 1s; 
+        }
+        .btn-premium i { color: var(--color-premium); }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.3); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        @keyframes slideInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .link-btn:nth-child(1) { animation-delay: 0.1s; }
+        .link-btn:nth-child(2) { animation-delay: 0.2s; }
+        .link-btn:nth-child(3) { animation-delay: 0.3s; }
+        .link-btn:nth-child(4) { animation-delay: 0.4s; }
+        .link-btn:nth-child(5) { animation-delay: 0.5s; }
+
         footer {
             margin-top: 2rem;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             opacity: 0.8;
             text-shadow: 1px 1px 2px black;
         }
-        footer a { color: white; text-decoration: none; font-weight: bold; }
-
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="perfil.png" alt="Fugindo da Casinha" class="profile-img">
+    <main class="container">
+        
+        <div class="profile-wrapper">
+            <img src="perfil.png" alt="Fugindo da Casinha" class="profile-img">
+        </div>
+        
+        <h1 class="username">@FugindoDaCasinhaOficial</h1>
+        <p class="bio">
+            ⛺ Camping, Aventuras & Vida a Dois<br>
+            📍 Uberaba-MG | Reviews Outdoor
+        </p>
 
-        <h1>@FugindoDaCasinhaOficial</h1>
-        <p class="bio">Camping, Aventuras & Vida a Dois ⛺<br>📍 Uberaba-MG | Reviews e Dicas Outdoor</p>
+        <div class="links-list">
+            
+            <a href="https://youtube.com/@fugindodacasinhaoficial" target="_blank" class="link-btn">
+                <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
+                Inscreva-se no Canal
+            </a>
 
-        <a href="https://youtube.com/@fugindodacasinhaoficial?si=gDPUBVgkNg3z769f" target="_blank" class="link-btn">
-            <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
-            Inscreva-se no Canal
-        </a>
+            <a href="equipamentos.html" class="link-btn btn-destaque">
+                <i class="fa-solid fa-campground"></i>
+                Equipamentos que Usamos
+            </a>
 
-        <a href="SEU_LINK_AFILIADO_DECATHLON" target="_blank" class="link-btn btn-destaque">
-            <i class="fa-solid fa-campground"></i>
-            Equipamentos que Usamos (Decathlon)
-        </a>
+            <a href="https://www.instagram.com/fugindodacasinhaoficial/" target="_blank" class="link-btn">
+                <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
+                Siga no Instagram
+            </a>
 
-        <a href="https://www.instagram.com/fugindodacasinhaoficial/" target="_blank" class="link-btn">
-            <i class="fa-brands fa-instagram"></i>
-            Siga no Instagram
-        </a>
+            <a href="mailto:fugindodacasinhaoficial25@gmail.com" class="link-btn">
+                <i class="fa-regular fa-envelope"></i>
+                Parcerias & Contato
+            </a>
 
-        <a href="mailto:fugindodacasinhaoficial25@gmail.com" class="link-btn">
-            <i class="fa-solid fa-envelope"></i>
-            Parcerias & Contato
-        </a>
+            <a href="servico.html" class="link-btn btn-premium">
+                <i class="fa-solid fa-rocket"></i>
+                Quero um Site Igual a Esse
+            </a>
+            
+        </div>
 
         <footer>
-            <p>&copy; 2026 Fugindo da Casinha<br>
-            <a href="#">Dedicado aos amantes da NATUREZA</a></p>
+            <p>&copy; 2026 Fugindo da Casinha<br>Dedicado aos amantes da NATUREZA</p>
         </footer>
-    </div>
+    </main>
 
 </body>
-
 </html>
-
